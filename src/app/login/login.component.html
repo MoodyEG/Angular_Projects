@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+      <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            ngModel
+            name="email"
+            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}(\.[a-z]{2,})?$"
+            #email="ngModel"
+            placeholder="Enter email"
+            required
+          />
+        </div>
+        @if (email.invalid && email.touched) {
+        <div class="form-text text-danger">
+          Please enter a valid email address
+        </div>
+        }
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            ngModel
+            minlength="8"
+            name="password"
+            #password="ngModel"
+            required
+          />
+        </div>
+        @if (password.invalid && password.touched) {
+        <div class="form-text text-danger">
+          Please enter at least 8 characters
+        </div>
+        }
+        <br />
+        <button type="submit" class="btn btn-primary">Log in</button>
+
+        @if (done && email.valid && password.valid) {
+        <span class="form-text text-success mt-3" role="alert">
+          Login successful
+        </span>
+        }
+      </form>
+
+      <br />
+      <div class="text-center fw-bold">
+        Don't have an account?
+        <a href="#" routerLink="/register" class="">Register</a>
+      </div>
+    </div>
+  </div>
+</div>

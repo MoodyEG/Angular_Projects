@@ -1,0 +1,116 @@
+<div class="container-fluid">
+  <div class="row d-flex flex-row">
+    <div class="col-12 col-sm-6 text-center">
+      <img
+        [src]="product.images[0]"
+        alt=""
+        style="height: 500px"
+        class="object-fit-contain"
+      />
+      <div class="row row-cols-4">
+        @for (img of product.images; track img) {
+        <img src="{{ img }}" alt="" class="object-fit-contain" />
+        }
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 d-flex flex-column">
+      <h2 class="fw-bold">{{ product.title }}</h2>
+      <div>
+        <p>{{ product.description }}</p>
+        <div class="d-flex align-items-center mb-2">
+          <!-- * Star rating -->
+          @for (star of [1, 2, 3, 4, 5]; track star) { @if (product.rating >=
+          star) {
+          <i class="fa text-warning fa-star"></i>
+          } @else if (product.rating >= star - 0.5) {
+          <i class="fa text-warning fa-star-half"></i>
+          } @else {
+          <i class="fa text-warning fa-star-o"></i>
+          } } ({{ product.reviews.length }})
+        </div>
+      </div>
+      <div class="my-2">
+        <!-- ! Bonus, Discount -->
+        @if (product.discountPercentage > 0) {
+        <span class="text-decoration-line-through">
+          {{ product.price | currency : "EGP" }}
+        </span>
+        <span class="ms-2">
+          {{
+            product.price
+              | discount : product.discountPercentage
+              | currency : "EGP"
+          }}
+        </span>
+        } @else {
+        {{ product.price | currency : "EGP" }}
+        }
+      </div>
+      <div>
+        <div
+          [ngClass]="{
+            'bg-danger': product.stock === 0,
+            'bg-success': product.stock > 0
+          }"
+          class="text-white text-center rounded-5 col-5 p-1 my-3"
+        >
+          <!-- * Custom pipe stock -->
+          {{ product.stock | stock }}
+        </div>
+        <br />
+        <b>More information</b> <br /><br />
+        <button class="btn btn-secondary rounded-5 mx-2">
+          {{ product.category }}
+        </button>
+        <button class="btn btn-secondary rounded-5 mx-2">
+          {{ product.brand }}
+        </button>
+      </div>
+      <div class="my-3">
+        @if (product.stock > 0) {
+
+        <div class="d-flex align-items-center">
+          <button
+            class="btn btn-secondary text-black bg-body-secondary rounded-start-5 btn-outline-light"
+            (click)="
+              quantity < product.stock
+                ? (quantity = quantity + 1)
+                : (quantity = product.stock)
+            "
+          >
+            <i class="fa fa-plus"></i>
+          </button>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            min="1"
+            disabled
+            [(ngModel)]="quantity"
+            class="form-control w-25 text-center bg-body-secondary rounded-0"
+            [value]="1"
+            placeholder="1"
+          />
+          <button
+            class="btn btn-secondary text-black bg-body-secondary rounded-end-5 btn-outline-light"
+            (click)="quantity > 0 ? (quantity = quantity - 1) : (quantity = 0)"
+          >
+            <i class="fa fa-minus"></i>
+          </button>
+          Available: {{ product.stock }}
+        </div>
+        <div class="mt-4">
+          <!-- <button class="btn btn-success rounded-5 mx-3">Buy Now</button> -->
+          <button
+            class="btn btn-outline-success rounded-5"
+            style="border: 1px solid black"
+            (click)="addToCart(product, quantity)"
+          >
+            Add to cart
+          </button>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

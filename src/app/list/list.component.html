@@ -1,0 +1,7 @@
+<div class="container mt-4">
+  <div class="row row-cols-2 row-cols-md-3 g-4 d-flex">
+    @for (product of productsList; track product.id) {
+    <app-card [product]="product"></app-card>
+    }
+  </div>
+</div>

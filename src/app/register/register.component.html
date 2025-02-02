@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+      <form [formGroup]="registerForm" (ngSubmit)="register(registerForm)">
+        <div class="form-group my-2">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Enter name"
+          />
+        </div>
+        @if (registerForm.controls['name'].invalid &&
+        registerForm.controls['name'].touched) { @if
+        (registerForm.controls['name'].errors['required']) {
+        <div class="form-text text-danger">Name is required</div>
+        } @else if (registerForm.controls['name'].errors['minlength']) {
+        <div class="form-text text-danger">
+          Name must be at least 3 characters
+        </div>
+        }}
+        <div class="form-group my-2">
+          <label for="userName">User Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="userName"
+            placeholder="Enter User Name"
+          />
+        </div>
+        @if (registerForm.controls['userName'].invalid &&
+        registerForm.controls['userName'].touched) { @if
+        (registerForm.controls['userName'].errors['required']) {
+        <div class="form-text text-danger">User Name is required</div>
+        } @else if (registerForm.controls['userName'].errors['pattern']) {
+        <div class="form-text text-danger">
+          User Name mustn't contain spaces
+        </div>
+        }}
+        <div class="form-group my-2">
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            placeholder="Enter email"
+          />
+        </div>
+        @if (registerForm.controls['email'].invalid &&
+        registerForm.controls['email'].touched) {
+        <div class="form-text text-danger">
+          Please enter a valid email address
+        </div>
+        }
+        <div class="form-group my-2">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            placeholder="Password"
+          />
+        </div>
+        @if (registerForm.controls['password'].invalid &&
+        registerForm.controls['password'].touched) { @if
+        (registerForm.controls['password'].errors['required']) {
+        <div class="form-text text-danger">Password is required</div>
+        } @else if (registerForm.controls['password'].errors['minlength']){
+        <div class="form-text text-danger">
+          Password must be at least 8 characters
+        </div>
+        } @else if (registerForm.controls['password'].errors['pattern']) {
+        <div class="form-text text-danger">
+          At least one lowercase, one uppercase, one digit, and one special
+          character
+        </div>
+        }}
+        <div class="form-group my-2">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="confirmPassword"
+            placeholder="Confirm Password"
+          />
+        </div>
+        @if (registerForm.controls['confirmPassword'].invalid &&
+        registerForm.controls['confirmPassword'].touched) { @if
+        (registerForm.controls['confirmPassword'].errors['required']) {
+        <div class="form-text text-danger">Confirm Password is required</div>
+        } @else if (registerForm.controls['confirmPassword'].errors['mismatch'])
+        {
+        <div class="form-text text-danger">Passwords do not match</div>
+        } }
+
+        <button type="submit" class="btn btn-primary mt-5">Register</button
+        ><br />
+        @if (done && registerForm.valid) {
+        <span class="form-text text-success mt-5" role="alert">
+          Register successful
+        </span>
+        }
+      </form>
+      <div class="text-center fw-bold mt-3">
+        Already have an account?
+        <a href="#" routerLink="/login" class="">Login</a>
+      </div>
+    </div>
+  </div>
+</div>
